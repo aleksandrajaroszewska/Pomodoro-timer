@@ -1,11 +1,14 @@
 .App {
     font-family: sans-serif;
+    
 }
 .Timebox {
     border:1px solid black;
     border-radius:10px;
     padding:20px;
     margin-top:10px;
+    background-color:#3A506B;
+    color:white;
 }
 
 .TimeboxEditor, .TimeboxCreator {
@@ -14,6 +17,8 @@
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
+    background-color:rgba(53, 49, 49, 1);
+    color:white;
 }
 
 input {
@@ -34,14 +39,16 @@ button {
     border-radius: 5px;
     padding: 20px;
     text-align: center;
+    background-color: rgb(172, 28, 52);
 }
 
 .Clock {
-    color: orangered;
+    color: #2589BD;
+   
 }
 
 .ProgressBar {
-    border: 1px solid orangered;
+    border: 1px solid #2589BD;
     border-radius: 5px;
     height: 30px;
     margin-bottom: 20px;
@@ -57,7 +64,7 @@ button {
 
 .ProgressBar .bar {
     height: 100%;
-    background-color: orangered;
+    background-color: #2589BD;
 }
 .ProgressBar .percent {
     position:absolute;
