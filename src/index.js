@@ -21,10 +21,11 @@ function TimeboxEditor (props)  {
     
     const {title, totalTimesInMinutes, onTitleChange, onTotalTimeInMinutesChange, isEditable} = props;
     return (
-        <div className= {`TimeboxEditor${isEditable? "inactive" : ""}`}>
+        <div className= {`TimeboxEditor${isEditable? " inactive" : ""}`}>
             <label>Co robisz? 
                <input  disabled ={false}  value={title} onChange={onTitleChange} type="text"
                />
+
             </label><br/>
             <label>
             Ile minut? 
@@ -109,7 +110,7 @@ class CurrentTimebox extends React.Component {
      render() {
 
         const { isPaused, isRunning, pausesCount, elapsedTimeInSeconds} = this.state;
-        const {title, totalTimeInMinutes, isEditable} = this.props;
+        const {title, totalTimeInMinutes} = this.props;
         const totalTimeInSeconds = totalTimeInMinutes * 60;
         const timeLeftInSeconds = totalTimeInSeconds - elapsedTimeInSeconds;
         const minutesLeft = Math.floor((timeLeftInSeconds/60));
@@ -117,9 +118,9 @@ class CurrentTimebox extends React.Component {
         const progressTime = (elapsedTimeInSeconds / totalTimeInSeconds) *100.0;
 
         return (
-            <div className= {`CurrentTimebox${isEditable? "inactive" : ""}`}>
+            <div >
                 <h1>{title}</h1>
-                <Clock minutes = {minutesLeft} seconds = {secondsLeft}  className ={isPaused? "inactive" : ""} />
+                <Clock minutes = {minutesLeft} seconds = {secondsLeft}  className ={isPaused ? " inactive" : ""} />
                 <ProgressBar percent = {progressTime}  />
                 <button onClick ={this.handleStart} disabled={isRunning}>Start</button>
                 <button onClick ={this.handleStop} disabled={!isRunning}>Stop</button>
