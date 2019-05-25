@@ -1,14 +1,77 @@
 import React from 'react'
 
-function Timebox ({title, totalTimeInMinutes, onDelete, onEdit}) {
-   
-    return (
-        <div className="Timebox">
-           <h3> {title} - {totalTimeInMinutes} min. </h3>
-           <button onClick={onDelete} > Usuń  </button>
-           <button onClick={onEdit} > Edytuj </button>
-         </div>
-    )
+
+
+
+  
+class Timebox extends React.Component {
+    
+    state = {
+        titleInput: this.props.title,
+        totalTimeInMinutesInput: this.props.totalTimeInMinutes,
+        isEditable: false
+    }
+    handleTimeboxEdit = (event) => {
+        this.setState({ isEditable: true});
+    }
+    handleTitleInputChange = (event) => {
+        this.setState({ titleInput: event.target.value });
+    }
+    handleTotalTimeInMinutesInputChange = (event) => {
+        this.setState({ totalTimeInMinutesInput: event.target.value });
+    }
+    
+    handleChangesConfirm = (event) => {
+        this.props.onEdit({
+            id: this.props.id,
+            title: (this.state.titleInput === "") ? this.props.title : this.state.titleInput,
+            totalTimeInMinutes: (this.state.totalTimeInMinutesInput === "") ? this.props.totalTimeInMinutes : this.state.totalTimeInMinutesInput
+        });
+        // this.clearEditor();
+        this.setState({ isEditable: false });
+    }
+    handleChangesCancel = (event) => {
+        // this.clearEditor();
+        this.setState({ 
+            titleInput: this.props.title, 
+            totalTimeInMinutesInput: this.props.totalTimeInMinutes, 
+            isEditable: false 
+        });
+    }
+    render() {
+        const { title, totalTimeInMinutes, onDelete } = this.props;
+        const { titleInput, totalTimeInMinutesInput, isEditable} = this.state;
+        return (
+            <div className="Timebox">
+                <h3>{title} - {totalTimeInMinutes} min.</h3>
+                <button onClick={onDelete}>Usuń</button>
+                <button onClick={this.handleTimeboxEdit}>Zmień</button>
+                <div className={`hiddenTimeboxEditor ${isEditable ? "" : "hidden"}`}>
+                    <label>
+                        zadanie
+                        <input
+                            value={titleInput}
+                            onChange={this.handleTitleInputChange}
+                            type="text"
+                        />
+                    </label><br />
+                    <label>
+                         minuty
+                        <input 
+                            value={totalTimeInMinutesInput}
+                            onChange={this.handleTotalTimeInMinutesInputChange}
+                            type="number"
+                        />
+                    </label>
+                    <br />
+                    <button onClick={this.handleChangesConfirm}>Zatwierdź</button>
+                    <button onClick={this.handleChangesCancel}>Anuluj</button>
+                </div>
+            </div>
+        )
+    }
+
+
 }
 
 export default Timebox

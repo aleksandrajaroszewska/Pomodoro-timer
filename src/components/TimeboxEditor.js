@@ -35,7 +35,7 @@ function TimeboxEditor(props) {
                 onClick={onConfirm}
                 disabled={!isEditable}
             >
-                Zatwierdź zmiany
+                Zatwierdź zmiany i zacznij
             </button>
         </div>
     )
