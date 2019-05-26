@@ -7,7 +7,6 @@ class TimeboxCreator extends React.Component {
         super(props);
         this.titleInput = React.createRef();
         this.totalTimeInMinutesInput = React.createRef();
-        this.formInput = React.createRef();
     }
 
     handleSubmit = (event) => {
@@ -18,7 +17,6 @@ class TimeboxCreator extends React.Component {
                  totalTimeInMinutes:this.totalTimeInMinutesInput.current.value
                 
             });
-           console.log( this.titleInput.current,  this.totalTimeInMinutesInput.current, this.formInput.current.input)
     }
        
     render (){
@@ -27,7 +25,7 @@ class TimeboxCreator extends React.Component {
             <label>
                 Co robisz?
                 <input 
-                     ref={this.totalTimeInMinutesInput}
+                     ref={this.titleInput}
                      type="text" 
                     
                 />
@@ -35,8 +33,8 @@ class TimeboxCreator extends React.Component {
             <label>
                 Ile minut?
                 <input 
-                    ref={this.titleInput}
-                    onChange={this.handleTotalTimeInMinutesChange}
+                    ref={this.totalTimeInMinutesInput}
+                    type="number"
                   
                 />
             </label><br />

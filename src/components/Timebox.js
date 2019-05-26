@@ -2,7 +2,6 @@ import React from 'react'
 
 
 
-
   
 class Timebox extends React.Component {
     
@@ -11,6 +10,9 @@ class Timebox extends React.Component {
         totalTimeInMinutesInput: this.props.totalTimeInMinutes,
         isEditable: false
     }
+   
+
+
     handleTimeboxEdit = (event) => {
         this.setState({ isEditable: true});
     }
@@ -27,11 +29,11 @@ class Timebox extends React.Component {
             title: (this.state.titleInput === "") ? this.props.title : this.state.titleInput,
             totalTimeInMinutes: (this.state.totalTimeInMinutesInput === "") ? this.props.totalTimeInMinutes : this.state.totalTimeInMinutesInput
         });
-        // this.clearEditor();
+       
         this.setState({ isEditable: false });
     }
     handleChangesCancel = (event) => {
-        // this.clearEditor();
+       
         this.setState({ 
             titleInput: this.props.title, 
             totalTimeInMinutesInput: this.props.totalTimeInMinutes, 
@@ -41,6 +43,10 @@ class Timebox extends React.Component {
     render() {
         const { title, totalTimeInMinutes, onDelete } = this.props;
         const { titleInput, totalTimeInMinutesInput, isEditable} = this.state;
+        console.log(totalTimeInMinutes);
+        if (totalTimeInMinutes <= 0) {
+            throw new Error ("całkowity czas musi być większy ni zero");
+        }
         return (
             <div className="Timebox">
                 <h3>{title} - {totalTimeInMinutes} min.</h3>
