@@ -1,47 +1,40 @@
-import React from 'react';
-
+import React from "react";
 
 function TimeboxEditor(props) {
-    const {
-        title,
+    const { 
+        title, 
         totalTimeInMinutes,
+        isEditable,
         onTitleChange,
         onTotalTimeInMinutesChange,
-        isEditable,
         onConfirm
     } = props;
     return (
-        <div className={`TimeboxEditor ${ isEditable ? "" : " inactive"}`}>
+        <div className={`TimeboxEditor ${isEditable ? "" : "inactive"}`}>
             <label>
                 Co robisz?
-                <input
-                    disabled={!isEditable}
+                <input 
+                    disabled={!isEditable} 
                     value={title}
-                    onChange={onTitleChange}
-                    type="text"
+                    onChange={onTitleChange} 
+                    type="text" 
                 />
-            </label>
-            <br />
+            </label><br/>
             <label>
                 Ile minut?
-                <input
-                    disabled={!isEditable}
+                <input 
+                    disabled={!isEditable} 
                     value={totalTimeInMinutes}
-                    onChange={onTotalTimeInMinutesChange}
-                    type="number" />
-            </label>
-            <br />
-            <button
+                    onChange={onTotalTimeInMinutesChange} 
+                    type="number" 
+                />
+            </label><br />
+            <button 
                 onClick={onConfirm}
                 disabled={!isEditable}
-            >
-                Zatwierdź zmiany i zacznij
-            </button>
+            >Zatwierdź zmiany</button>
         </div>
     )
 }
 
- 
-
-
-export default TimeboxEditor
+export default TimeboxEditor;

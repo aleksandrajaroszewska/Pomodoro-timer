@@ -1,0 +1,83 @@
+
+.App {
+    font-family: sans-serif;
+    color:white;
+}
+
+.Timebox {
+    border: $default-border;
+    border-radius: $border-radius;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.TimeboxEditor, .TimeboxCreator {
+    text-align: right;
+    border: $default-border;
+    border-radius: $border-radius;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.TimeboxCreator {
+    background-color: rgb(84, 10, 78);
+}
+.TimeboxEditor {
+    background-color:darken(rgb(41, 164, 35), 5);
+}
+.Timebox {
+    background-color: #372a2a;
+}
+.CurrentTimebox {
+    background-color: #cdcd3a;
+}
+
+input {
+    min-width: 60%;
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+button{
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.CurrentTimebox {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+}
+
+.Clock {
+    color: #372a2a;;
+}
+
+.progress {
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 25px;
+    margin-bottom: 20px;
+    padding: 5px;
+
+    &--big {
+        height: 50px;
+    }
+    
+    &--color-red {
+        border-color: #372a2a;;
+    }
+    
+    &__bar {
+        height: 100%;
+        background-color: black;
+    }
+    
+    &--color-red &__bar {
+        background-color: #372a2a;;
+    }
+}
+
+
+

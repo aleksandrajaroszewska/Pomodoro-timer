@@ -1,47 +1,54 @@
-import React from 'react';
-import TimeboxEditor from './TimeboxEditor'
-import CurrentTimebox from './CurrentTimebox'
+
+
+import React from "react";
+
+import TimeboxEditor from "./TimeboxEditor";
+import CurrentTimebox from "./CurrentTimebox";
 
 class EditableTimebox extends React.Component {
     state = {
-        title: "Uczę się o kontrolowanych komponentach",
-        totalTimeInMinutes: 15,
-        isEditable: true
+        title: "Komunikuję się z Serwerem",
+        totalTimeInMinutes: 3,
+        isEditable: false
     }
-    onTitleChange(e) {
-        this.setState({title: e.target.value})
+    handleTitleChange = (event) => {
+        this.setState({ title: event.target.value });
     }
-    onTotalTimeInMinutesChange(e) {
-        this.setState({totalTimeInMinutes: e.target.value})
+    handleTotalTimeInMinutesChange = (event) => {
+        this.setState({ totalTimeInMinutes: event.target.value });
     }
-    handleConfirm() {
-        this.setState({isEditable: false})
+    handleConfirm = () => {
+        this.setState({ isEditable: false });
     }
-    handleEdit() {
-        this.setState({isEditable: true})
+    handleEdit = () => {
+        this.setState({ isEditable: true });
     }
     render() {
         const { title, totalTimeInMinutes, isEditable } = this.state;
         return (
             <React.Fragment>
-                <TimeboxEditor
-                    title={title}
-                    totalTimeInMinutes={totalTimeInMinutes}
-                    onTitleChange={this.onTitleChange.bind(this)}
-                    onTotalTimeInMinutesChange={this.onTotalTimeInMinutesChange.bind(this)}
-                    isEditable={isEditable}
-                    onConfirm={this.handleConfirm.bind(this)}
-                />
-                <CurrentTimebox
-                    totalTimeInMinutes={totalTimeInMinutes}
-                    title={title}
-                    key={totalTimeInMinutes}
-                    isEditable={isEditable}
-                    onEdit={this.handleEdit.bind(this)}
-                />
+                <React.StrictMode>
+                    { isEditable ? (
+                        <TimeboxEditor 
+                            title={title}
+                            totalTimeInMinutes={totalTimeInMinutes}
+                            isEditable={isEditable}
+                            onConfirm={this.handleConfirm}
+                            onTitleChange={this.handleTitleChange}
+                            onTotalTimeInMinutesChange={this.handleTotalTimeInMinutesChange}
+                        />
+                    ) : (
+                        <CurrentTimebox 
+                            isEditable={isEditable}
+                            title={title} 
+                            totalTimeInMinutes={totalTimeInMinutes} 
+                            onEdit={this.handleEdit}
+                        />
+                    )}
+                </React.StrictMode>
             </React.Fragment>
         )
     }
 }
 
-export default EditableTimebox
+export default EditableTimebox;

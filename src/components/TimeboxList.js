@@ -1,72 +1,92 @@
-import React from 'react';
-import TimeboxCreator from './TimeboxCreator'
-import Timebox from './Timebox'
+import React, {Fragment} from "react";
+
+import Timebox from "./Timebox";
+import TimeboxCreator from "./TimeboxCreator";
 import uuid from "uuid";
-import Error from './Error';
+import TimeboxesAPI from "../API/FetchTimeboxesApi"
+
+
+
 
 
 class TimeboxList extends React.Component {
     state = {
-        timeboxes: [
-            { id: uuid.v4(), title: "Uczę się list", totalTimeInMinutes: 25 },
-            { id: uuid.v4(), title: "Uczę się formularzy", totalTimeInMinutes: 15 },
-            { id: uuid.v4(), title: "Uczę się komponentów niekontrolowanych", totalTimeInMinutes: 5 }
-        ],
-        hasError:false
+        "timeboxes": [],
+        loading: true,
+        error: null
     }
-   
-   
 
+    componentDidMount() {
+        console.log(uuid.v4());
+        
+        TimeboxesAPI.getAllTimeboxes().then(
+            (timeboxes) => this.setState({timeboxes})
+        ).catch(
+            (error) => Promise.reject(this.setState({error}))
+        ).finally (
+            () => this.setState({loading:false})
+        )
+    }
+    
     addTimebox = (timebox) => {
-        this.setState(prevState => {
-            const timeboxes = [timebox, ...prevState.timeboxes];
+        TimeboxesAPI.addTimebox(timebox).then(
+            (addedTimebox) =>  this.setState(prevState => {
+            const timeboxes = [ ...prevState.timeboxes, addedTimebox];
             return { timeboxes };
         })
+        )
+
     }
     removeTimebox = (indexToRemove) => {
-        this.setState(prevState => {
+        TimeboxesAPI.removeTimebox(this.state.timeboxes[indexToRemove])
+        .then (
+        () => this.setState(prevState => {
             const timeboxes = prevState.timeboxes.filter((timebox, index) => index !== indexToRemove);
             return { timeboxes };
         })
+        )
+        
     }
-    updateTimebox = (indexToUpdate, updatedTimebox) => {
-        this.setState(prevState => {
-            const timeboxes = prevState.timeboxes.map((timebox, index) => 
+    updateTimebox = (indexToUpdate, timeboxToUpdate) => {
+        TimeboxesAPI.replaceTimebox(timeboxToUpdate)
+        .then(
+        (updatedTimebox) => this.setState(prevState => {
+            const timeboxes = prevState.timeboxes.map((timebox, index) =>
                 index === indexToUpdate ? updatedTimebox : timebox
-            );
+            )
             return { timeboxes };
         })
+        )
     }
+
     handleCreate = (createdTimebox) => {
-        this.addTimebox(createdTimebox);
+        try {
+            this.addTimebox(createdTimebox);
+        } catch (error) {
+            console.log("Jest błąd przy tworzeniu timeboxa:", error)
+        }
+        
     }
     render() {
-        console.log(this.state);
         return (
-            <div>
+            <Fragment>
                 <TimeboxCreator onCreate={this.handleCreate} />
-                <Error message ={"coś poszło nie tak :("}>
+                {this.state.loading ? "timeboxy się ładują" : null}
+                {this.state.error ? "nie udało się załadować " : null}
                 {
-                    
-                this.state.timeboxes.map((timebox, index) => (
-                    <Timebox 
-                        key={timebox.id}
-                        id={timebox.id}
-                        title={timebox.title} 
-                        totalTimeInMinutes={timebox.totalTimeInMinutes} 
-                        onDelete={() => this.removeTimebox(index)}
-                        onEdit={(updatedTimebox) => this.updateTimebox(index, updatedTimebox)}
-                    />
-                ))
+                    this.state.timeboxes.map((timebox, index) => (
+                        <Timebox 
+                            key={timebox.id} 
+                            title={timebox.title} 
+                            totalTimeInMinutes={timebox.totalTimeInMinutes}
+                            onDelete={() => this.removeTimebox(index)}
+                            onEdit={() => this.updateTimebox(index, {...timebox, title: "Updated timebox"})}
+                        />
+                    ))
                 }
-                </Error>
-            </div>
+            </Fragment>
         )
     }
 }
 
-
-
-
-
-export default TimeboxList
+export default TimeboxList;
